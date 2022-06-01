@@ -22,7 +22,8 @@ let main () =
     print_endline (Box.string_of_box boxtree);
     print_endline "============================================================";
     print_endline (Tree.string_of_tree tree);
-    print_endline "============================================================"
+    print_endline "============================================================";
+    Semantic.semantic ast
    with
   | Error.Error (loc, msg) ->
      Format.printf "%a error: %s\n" Location.pp_location loc msg;
