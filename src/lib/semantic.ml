@@ -9,7 +9,11 @@ let rec check_exp (loc, exp) vtable ftable =
    ( match Symbol.look v vtable with
     | Some t -> t
     | None -> Error.error loc "undefined variable %s" (Symbol.name v)
-   ) 
+   )
+  | LetExp (v, init, body) ->
+     let t_init = check_exp init vtable ftable in
+     let vtable' = Symbol.enter v t_init vtable in
+     check_exp body vtable' ftable
   | _ -> Error.fatal "unimplemented"
 
 let get_typeid (t, id) =
