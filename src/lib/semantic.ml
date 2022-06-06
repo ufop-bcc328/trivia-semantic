@@ -5,6 +5,11 @@ open Absyn
 let rec check_exp (loc, exp) vtable ftable =
   match exp with
   | IntExp x -> Int
+  | VarExp v ->
+   ( match Symbol.look v vtable with
+    | Some t -> t
+    | None -> Error.error loc "undefined variable %s" (Symbol.name v)
+   ) 
   | _ -> Error.fatal "unimplemented"
 
 let get_typeid (t, id) =
